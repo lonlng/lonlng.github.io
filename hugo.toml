@@ -1,0 +1,9 @@
+baseURL = 'https://lonlng.github.io'
+languageCode = 'en-us'
+defaultContentLanguage = 'zh'
+title = 'Lonlng Hugo Site'
+theme = 'hugo-book'
+
+[params]
+ShowToc = true
+TocOpen = true
