@@ -1,6 +1,7 @@
 ---
+title: hugo-book exampleSite
 bookCollapseSection: true
-weight: 100
+weight: 1
 ---
 
 # Acerbo datus maxime
