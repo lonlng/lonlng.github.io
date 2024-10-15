@@ -17,7 +17,7 @@
 <link rel="canonical" href="http://localhost:1313/posts/">
 <link rel="stylesheet" href="/book.min.309b7ed028807cdb68d8d61e26d609f48369c098dbf5e4d8c0dcf4cdf49feafc.css" integrity="sha256-MJt&#43;0CiAfNto2NYeJtYJ9INpwJjb9eTYwNz0zfSf6vw=" crossorigin="anonymous">
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/zh.search.min.a59d6d62ef08a8dcaa19130245c80fdee3830378db338c0fa841fe1130bfda8b.js" integrity="sha256-pZ1tYu8IqNyqGRMCRcgP3uODA3jbM4wPqEH&#43;ETC/2os=" crossorigin="anonymous"></script>
+  <script defer src="/zh.search.min.cf3f1aacaa428a95c29415fd7d97d2840102fd3cc8019d397adedf92b020ad4a.js" integrity="sha256-zz8arKpCipXClBX9fZfShAEC/TzIAZ05et7fkrAgrUo=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="http://localhost:1313/posts/index.xml" title="Lonlng Hugo Site" />
 <!--
 Made with Book Theme
@@ -207,7 +207,100 @@ https://github.com/alex-shpak/hugo-book
         </li>
       
     
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rust/the-rust-programming-lanuage/" class="">The Rust Programming Lanuage</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rust/the-rust-programming-lanuage/common-lanuaging-concepts/" class="">Common Lanuaging Concepts</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rust/the-rust-programming-lanuage/common-lanuaging-concepts/variables-and-mutability/" class="">Variables and Mutability</a>
+  
+
+        </li>
+      
+    
   </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rust/the-rust-programming-lanuage/understanding-ownership/" class="">Understanding Ownership</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/rust/the-rust-programming-lanuage/understanding-ownership/what-is-owership/" class="">What Is Owership</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/hugo/my-first-post/" class="">My First Post</a>
+  
 
         </li>
       
@@ -452,7 +545,12 @@ https://github.com/alex-shpak/hugo-book
       
         <li class="flex justify-between">
           <a href="/categories/development/">Development</a>
-          <span>2</span>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/categories/linux/">Linux</a>
+          <span>1</span>
         </li>
       
         <li class="flex justify-between">
@@ -468,6 +566,16 @@ https://github.com/alex-shpak/hugo-book
     <li class="book-section-flat">
       <strong>Tags</strong>
       <ul>
+      
+        <li class="flex justify-between">
+          <a href="/tags/fd/">Fd</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/linux/">Linux</a>
+          <span>1</span>
+        </li>
       
         <li class="flex justify-between">
           <a href="/tags/development/">Development</a>
@@ -536,6 +644,7 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#introduction">#</a>
 </h2>
 <p>This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&rsquo;t cover using CSS to style your theme.</p>
+<p>We&rsquo;ll start with creating a new site with a very basic template. Then we&rsquo;ll add in a few pages and posts. With small variations on that, you will be able to create many different types of web sites.</p>
         <a href="/posts/creating-a-new-theme/">...</a>
       
     </p>
@@ -566,9 +675,54 @@ With Jekyll, something that looked like</p>
 <pre><code>▾ &lt;root&gt;/
     ▾ images/
         logo.png
-</code></pr
+</code></pre>
+<p>should become</p>
+<pre><code>▾ &lt;root&gt;/
+    ▾ static/
+        ▾ images/
+            logo.png
+</code></pre>
+<p>Additionally, you&rsquo;ll want any files that should reside at the root (such as <code>CNAME</code>) to be moved to <code>static</code>.</p>
         <a href="/posts/migrate-from-jekyll/">...</a>
       
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/linux-df/">linux中的文件描述符(fd)</a>
+    </h2>
+    
+  <h5>十月 15, 2024</h5>
+
+
+
+  
+  <div>
+    
+      <a href="/categories/development/">Development</a>, 
+      <a href="/categories/linux/">Linux</a>
+  </div>
+  
+
+  
+  <div>
+    
+      <a href="/tags/linux/">Linux</a>, 
+      <a href="/tags/fd/">Fd</a>
+  </div>
+  
+
+
+
+
+    <p><p>什么是fd?
+在linux 中多数资源以文件形式存在, 文件描述符就是文件对应的编号。
+为什么存在 fd
+fd的作用</p>
+<ol>
+<li>描述符是文件描述符，文件描述符是进程和文件系统之间的一个接口，它用来表示进程和文件系统之间的一个连接。</li>
+</ol>
     </p>
   </article>
   
@@ -609,6 +763,8 @@ small amount of logic. In our experience that it is just the right amount of
 logic to be able to create a good static website. If you have used other
 template systems from different languages or frameworks you will find a lot of
 similarities in Go templates.</p>
+<p>This document is a brief primer on using Go templates. The <a href="https://golang.org/pkg/html/template/">Go docs</a>
+provide more details.</p>
         <a href="/posts/goisforlovers/">...</a>
       
     </p>
@@ -658,6 +814,7 @@ appropriate version for your OS and architecture.</p>
 </h2>
 <p>Hugo has its own example site which happens to also be the documentation site
 you are reading right now.</p>
+<p>Follow the following steps:</p>
         <a href="/posts/hugoisforlovers/">...</a>
       
     </p>
@@ -708,7 +865,12 @@ you are reading right now.</p>
       
         <li class="flex justify-between">
           <a href="/categories/development/">Development</a>
-          <span>2</span>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/categories/linux/">Linux</a>
+          <span>1</span>
         </li>
       
         <li class="flex justify-between">
@@ -724,6 +886,16 @@ you are reading right now.</p>
     <li class="book-section-flat">
       <strong>Tags</strong>
       <ul>
+      
+        <li class="flex justify-between">
+          <a href="/tags/fd/">Fd</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/linux/">Linux</a>
+          <span>1</span>
+        </li>
       
         <li class="flex justify-between">
           <a href="/tags/development/">Development</a>

@@ -11,7 +11,7 @@ headless: true
     - [4th]({{< relref "/docs/example/collapsed/3rd-level/4th-level" >}})
 <br />
 
-- [**R ust**]({{< relref "/docs/rust" >}})
+- [**Rust**]({{< relref "/docs/rust" >}})
   - [first]({{< relref "/docs/rust/my-first-post.md" >}})
 <br />
 
@@ -23,4 +23,8 @@ headless: true
 - [KaTeX]({{< relref "/docs/shortcodes/katex" >}})
 - [Mermaid]({{< relref "/docs/shortcodes/mermaid" >}})
 - [Tabs]({{< relref "/docs/shortcodes/tabs" >}})
+<br />
+
+- [**Hugo**]({{< relref "/docs/hugo" >}})
+  - [first]({{< relref "/docs/rust/my-first-post.md" >}})
 <br />

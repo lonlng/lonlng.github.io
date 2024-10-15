@@ -84,6 +84,16 @@
   </url><url>
     <loc>http://localhost:1313/docs/example/hidden/</loc>
   </url><url>
+    <loc>http://localhost:1313/docs/rust/the-rust-programming-lanuage/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/rust/the-rust-programming-lanuage/common-lanuaging-concepts/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/rust/the-rust-programming-lanuage/common-lanuaging-concepts/variables-and-mutability/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/rust/the-rust-programming-lanuage/understanding-ownership/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/rust/the-rust-programming-lanuage/understanding-ownership/what-is-owership/</loc>
+  </url><url>
     <loc>http://localhost:1313/docs/shortcodes/</loc>
   </url><url>
     <loc>http://localhost:1313/docs/shortcodes/buttons/</loc>
