@@ -26,5 +26,4 @@ headless: true
 <br />
 
 - [**Hugo**]({{< relref "/docs/hugo" >}})
-  - [first]({{< relref "/docs/rust/my-first-post.md" >}})
 <br />
