@@ -66,7 +66,67 @@ scoket 是一个通信的终端 , 在`<sys/socket.h>` c标准库中。
 
 
 
-## API
+```c
+/* Address families.  */
+#define AF_UNSPEC	PF_UNSPEC
+#define AF_LOCAL	PF_LOCAL
+#define AF_UNIX		PF_UNIX
+#define AF_FILE		PF_FILE
+#define AF_INET		PF_INET
+#define AF_AX25		PF_AX25
+#define AF_IPX		PF_IPX
+#define AF_APPLETALK	PF_APPLETALK
+#define AF_NETROM	PF_NETROM
+#define AF_BRIDGE	PF_BRIDGE
+#define AF_ATMPVC	PF_ATMPVC
+#define AF_X25		PF_X25
+#define AF_INET6	PF_INET6
+#define AF_ROSE		PF_ROSE
+#define AF_DECnet	PF_DECnet
+#define AF_NETBEUI	PF_NETBEUI
+#define AF_SECURITY	PF_SECURITY
+#define AF_KEY		PF_KEY
+#define AF_NETLINK	PF_NETLINK
+#define AF_ROUTE	PF_ROUTE
+#define AF_PACKET	PF_PACKET
+#define AF_ASH		PF_ASH
+#define AF_ECONET	PF_ECONET
+#define AF_ATMSVC	PF_ATMSVC
+#define AF_RDS		PF_RDS
+#define AF_SNA		PF_SNA
+#define AF_IRDA		PF_IRDA
+#define AF_PPPOX	PF_PPPOX
+#define AF_WANPIPE	PF_WANPIPE
+#define AF_LLC		PF_LLC
+#define AF_IB		PF_IB
+#define AF_MPLS		PF_MPLS
+#define AF_CAN		PF_CAN
+#define AF_TIPC		PF_TIPC
+#define AF_BLUETOOTH	PF_BLUETOOTH
+#define AF_IUCV		PF_IUCV
+#define AF_RXRPC	PF_RXRPC
+#define AF_ISDN		PF_ISDN
+#define AF_PHONET	PF_PHONET
+#define AF_IEEE802154	PF_IEEE802154
+#define AF_CAIF		PF_CAIF
+#define AF_ALG		PF_ALG
+#define AF_NFC		PF_NFC
+#define AF_VSOCK	PF_VSOCK
+#define AF_KCM		PF_KCM
+#define AF_QIPCRTR	PF_QIPCRTR
+#define AF_SMC		PF_SMC
+#define AF_XDP		PF_XDP
+#define AF_MCTP		PF_MCTP
+#define AF_MAX		PF_MAX
+```
+
+
+
+
+
+# API
+
+
 
 这个列表是一个Berkeley套接字API库提供的函数或者方法的概要：
 
@@ -83,9 +143,59 @@ scoket 是一个通信的终端 , 在`<sys/socket.h>` c标准库中。
 - `getsockopt()` 用于查询指定的套接字一个特定的套接字选项的当前值。
 - `setsockopt()` 用于为指定的套接字设定一个特定的套接字选项。
 
-  
 
-### bind()
+
+
+
+
+
+
+## socket()
+
+`socket()` 为通讯创建一个端点，为套接字返回一个文件描述符。 socket() 有三个参数：
+
+- domain
+
+   为创建的套接字指定协议集。 例如：
+
+  - `PF_INET` 表示IPv4网络协议
+  - `PF_INET6` 表示IPv6
+  - `PF_UNIX` 表示本地套接字（使用一个文件）
+
+- type
+
+   如下：
+
+  - `SOCK_STREAM` （可靠的面向流服务或流套接字）
+  - `SOCK_DGRAM` （数据报文服务或者数据报文套接字）
+  - `SOCK_SEQPACKET` （可靠的连续数据包服务）
+  - `SOCK_RAW` (在网络层之上的原始协议)。
+
+- protocol 指定实际使用的传输协议。 最常见的就是`IPPROTO_TCP`、`IPPROTO_SCTP`、`IPPROTO_UDP`、`IPPROTO_DCCP`。这些协议都在<netinet/in.h>中有详细说明。 如果该项为“`0`”的话，即根据选定的domain和type选择使用缺省协议。
+
+如果发生错误，函数返回值为-1。 否则，函数会返回一个代表新分配的描述符的整数。
+
+- 原型：
+
+```
+int socket(int domain, int type, int protocol)。
+```
+
+
+
+## bind()
+
+`bind()` 为一个套接字分配地址。当使用`socket()`创建套接字后，只赋予其所使用的协议，并未分配地址。在接受其它主机的连接前，必须先调用bind()为套接字分配一个地址。`bind()`有三个参数：
+
+- `sockfd`, 表示使用bind函数的套接字描述符
+- `my_addr`, 指向sockaddr结构（用于表示所分配地址）的指针
+- `addrlen`, 用socklen_t字段指定了sockaddr结构的长度
+
+如果发生错误，函数返回值为-1，否则为0。
+
+
+
+原型
 
 ```c++
 #include <sys/socket.h>
@@ -93,7 +203,7 @@ scoket 是一个通信的终端 , 在`<sys/socket.h>` c标准库中。
 int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 ```
 
-#### 说明
+**说明**
 
 当使用 `socket(2)` 创建套接字时，它存在于名称空间（地址系列）中，但没有为其分配地址。 `bind()` 将 addr 指定的地址分配给文件描述符 **sockfd** 引用的套接字。 **addrlen** 指定 **addr** 指向的地址结构的大小（以字节为单位）。 传统上，此操作称为 “为套接字分配名称”。
 
@@ -187,11 +297,145 @@ int main(void)
 
 
 
+## listen()
+
+当socket和一个地址绑定之后，`listen()`函数会开始监听可能的连接请求。然而，这只能在有可靠数据流保证的时候使用，例如：数据类型(`SOCK_STREAM`,`SOCK_SEQPACKET`)。
+
+listen()函数需要两个参数：
+
+- `sockfd`, 一个socket的描述符.
+- `backlog`, 一个决定监听队列大小的整数，当有一个连接请求到来，就会进入此监听队列，当队列满后，新的连接请求会返回错误。当请求被接受，返回 0。反之，错误返回 -1。
+
+原型:
+
+```
+int listen(int sockfd, int backlog);
+```
+
+
+
+## accept()
+
+当应用程序监听来自其他主机的面对数据流的连接时，通过事件（比如Unix select()系统调用）通知它。必须用 `accept()`函数初始化连接。 Accept() 为每个连接创立新的套接字并从监听队列中移除这个连接。它使用如下参数：
+
+- `sockfd`,监听的套接字描述符
+- `cliaddr`, 指向sockaddr 结构体的指针，客户机地址信息。
+- `addrlen`,指向 `socklen_t`的指针，确定客户机地址结构体的大小 。
+
+返回新的套接字描述符，出错返回-1。进一步的通信必须通过这个套接字。
+
+Datagram 套接字不要求用accept()处理，因为接收方可能用监听套接字立即处理这个请求。
+
+- 函数原型：
+
+```
+int accept(int sockfd, struct sockaddr *cliaddr, socklen_t *addrlen);
+```
+
+## connect()
+
+`connect()`系统调用为一个套接字设置连接，参数有文件描述符和主机地址。
+
+某些类型的套接字是无连接的，大多数是UDP协议。对于这些套接字，连接时这样的：默认发送和接收数据的主机由给定的地址确定，可以使用 send()和 recv()。 返回-1表示出错，0表示成功。
+
+- 函数原型：
+
+```
+int connect(int sockfd, const struct sockaddr *serv_addr, socklen_t addrlen);
+```
+
+
+
+## recv()
+
+
+
+ recv, recvfrom, recvmsg - 从socket 中接受消息
+
+**语法：**
+
+```c++
+#include <sys/socket.h>
+ssize_t recv(int sockfd, void buf[.len], size_t len,
+                 int flags);
+ssize_t recvfrom(int sockfd, void buf[restrict .len], size_t len,
+                 int flags,
+                 struct sockaddr *_Nullable restrict src_addr,
+                 socklen_t *_Nullable restrict addrlen);
+ssize_t recvmsg(int sockfd, struct msghdr *msg, int flags);
+```
+
+**说明：**
+
+**recv()**调用通常仅在已连接的套接字上使用（参见connect（2））。它相当于调用：
+
+```c++
+recvfrom(fd, buf, len, flags, NULL, 0);
+```
+
+
+
+## send()
+
+send, sendto, sendmsg -  给socket发送消息
+
+**语法：**
+
+```c++
+#include <sys/socket.h>
+ssize_t send(int sockfd, const void buf[.len], size_t len, int flags);
+ssize_t sendto(int sockfd, const void buf[.len], size_t len, int flags,
+               const struct sockaddr *dest_addr, socklen_t addrlen);
+ssize_t sendmsg(int sockfd, const struct msghdr *msg, int flags);
+```
 
 
 
 
-## Socket options
+
+## readv()
+
+readv, writev, preadv, pwritev, preadv2, pwritev2 - 将数据读取或写入多个缓冲区
+
+**语法：**
+
+```c++
+#include <sys/uio.h>
+ssize_t readv(int fd, const struct iovec *iov, int iovcnt);
+ssize_t writev(int fd, const struct iovec *iov, int iovcnt);
+ssize_t preadv(int fd, const struct iovec *iov, int iovcnt,
+                off_t offset);
+ssize_t pwritev(int fd, const struct iovec *iov, int iovcnt,
+                off_t offset);
+ssize_t preadv2(int fd, const struct iovec *iov, int iovcnt,
+                off_t offset, int flags);
+ssize_t pwritev2(int fd, const struct iovec *iov, int iovcnt,
+                off_t offset, int flags);
+```
+
+
+
+**writev()**系统调用将iov描述的数据的**iovcnt**缓冲区写入与文件描述符fd关联的文件。**writev()**系统调用的工作方式与write（2）类似，只是写出了多个缓冲区。
+
+
+
+>  iovec - Vector I/O data structure
+>
+> ```c++
+> #include <sys/uio.h>
+> struct iovec {
+>     void   *iov_base;  /* Starting address */
+>     size_t  iov_len;   /* Size of the memory pointed to by iov_base. */
+> };
+> ```
+>
+> 描述一个内存区域，从**iov_base**地址开始，大小为**iov_len**字节。系统调用使用这种结构的数组，其中数组的每个元素表示一个内存区域，整个数组表示内存区域的向量。该数组中**iovec**结构的最大数量受**IOV_MAX**（在<limits.h>中定义，或可通过调用sysconf（_SC_IOV_MAX）访问）的限制。
+
+
+
+
+
+# Socket options
 
 
 
@@ -213,7 +457,7 @@ int setsockopt(int sockfd, int level, int optname,
 
 
 
-### SO_REUSEADDR
+## SO_REUSEADDR
 
 指示用于验证`bind(2)`调用中提供的地址的规则应允许重用本地地址。对于`AF_INET socket`，这意味着套接字可能会绑定，除非有一个活动的侦听套接字绑定到该地址。当侦听套接字绑定到具有特定端口的`INADDR_ANY`时则不可能为任何本地地址绑定到此端口。参数是一个整数布尔标志。
 
